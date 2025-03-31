@@ -9,7 +9,7 @@ interface TypingAnimationProps extends MotionProps {
   className?: string;
   duration?: number;
   delay?: number;
-  as?: React.ElementType;
+  as?: string | React.ComponentType<any>;
   startOnView?: boolean;
 }
 
@@ -22,14 +22,9 @@ export function TypingAnimation({
   startOnView = false,
   ...props
 }: TypingAnimationProps) {
-  const MotionComponent = motion.create(
-    typeof Component === 'string' || typeof Component === 'number'
-      ? String(Component)
-      : Component as React.ComponentType<any>,
-    {
-      forwardMotionProps: true,
-    }
-  );
+  const MotionComponent = motion.create(Component, {
+    forwardMotionProps: true,
+  });
 
   const [displayedText, setDisplayedText] = useState<string>("");
   const [started, setStarted] = useState(false);

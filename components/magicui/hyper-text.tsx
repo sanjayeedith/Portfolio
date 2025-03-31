@@ -16,7 +16,7 @@ interface HyperTextProps extends MotionProps {
   /** Delay before animation starts in milliseconds */
   delay?: number;
   /** Component to render as - defaults to div */
-  as?: keyof JSX.IntrinsicElements | React.ComponentType<any>;
+  as?: string | React.ComponentType<any>;
   /** Whether to start animation when element comes into view */
   startOnView?: boolean;
   /** Whether to trigger animation on hover */
@@ -112,11 +112,9 @@ export function HyperText({
     return () => clearInterval(interval);
   }, [children, duration, isAnimating, characterSet]);
 
-  const MotionComponent = motion(
-    typeof Component === 'string' || typeof Component === 'number'
-      ? String(Component)
-      : Component
-  );
+  const MotionComponent = motion.create(Component, {
+    forwardMotionProps: true,
+  });
 
   return (
     <MotionComponent
